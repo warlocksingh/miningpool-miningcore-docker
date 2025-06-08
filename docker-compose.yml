@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: miningcore
-      POSTGRES_PASSWORD: Kuki@1991
+      POSTGRES_PASSWORD: P@ssw0rd
       POSTGRES_DB: miningcore
     volumes:
       - postgres_data:/var/lib/postgresql/data
