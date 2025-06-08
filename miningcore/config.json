@@ -34,7 +34,7 @@
             "host": "postgres",
             "port": 5432,
             "user": "miningcore",
-            "password": "Kuki@1991",
+            "password": "P@ssw0rd",
             "database": "miningcore"
         }
     },
@@ -114,7 +114,7 @@
                     "host": "bch-node",
                     "port": 8332,
                     "user": "bchrpcuser",
-                    "password": "Kuki@1991"
+                    "password": "P@ssw0rd"
                 }
             ],
             "paymentProcessing": {
