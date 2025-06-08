@@ -9,3 +9,9 @@
 - WebUI: http://your-ip:3000
 - API: http://your-ip:4000
 - Dozzle (Logs): http://your-ip:8080
+## To update all components in the future:
+RUN bash:
+CopyInsert
+cd /path/to/miningcore-docker
+git pull
+./update.sh
