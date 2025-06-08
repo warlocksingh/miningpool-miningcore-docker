@@ -1,0 +1,37 @@
+{
+  "bitcoin-cash": {
+    "type": "BCH",
+    "coinbaseTxVersion": 2,
+    "txVersion": 1,
+    "hash": "double-sha256",
+    "coinbaseHasher": {
+      "format": "coinbase"
+    },
+    "headerHasher": {
+      "format": "header"
+    },
+    "blockHasher": {
+      "format": "block"
+    },
+    "transactionHasher": {
+      "format": "transaction"
+    },
+    "blockTime": 600,
+    "blockExplorerBlockLink": "https://blockchair.com/bitcoin-cash/block/{0}",
+    "blockExplorerTxLink": "https://blockchair.com/bitcoin-cash/transaction/{0}",
+    "blockExplorerAddressLink": "https://blockchair.com/bitcoin-cash/address/{0}",
+    "symbol": "BCH",
+    "smallestUnit": 100000000,
+    "network": {
+      "name": "mainnet",
+      "bech32": "bitcoincash",
+      "bip32": {
+        "public": 76067358,
+        "private": 76066276
+      },
+      "pubKeyHash": 0,
+      "scriptHash": 5,
+      "wif": 128
+    }
+  }
+}

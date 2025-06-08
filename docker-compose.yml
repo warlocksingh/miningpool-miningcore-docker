@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  bch-node:
+    image: zquestz/bitcoin-cash-node:latest
+    container_name: bch-node
+    restart: always
+    user: "1000:1000"
+    ports:
+      - "8332:8332"
+      - "8333:8333"
+      - "28332:28332"
+    volumes:
+      - ./coins/bch:/data
+    command: bash -c "chmod 644 /data/bch.conf && bitcoind -conf=/data/bch.conf -printtoconsole=1 -datadir=/data"
+    networks:
+      - miningcore-net
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: miningcore
+      POSTGRES_PASSWORD: Kuki@1991
+      POSTGRES_DB: miningcore
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - miningcore-net
+
+  miningcore:
+    image: theretromike/miningcore:latest
+    container_name: miningcore
+    restart: always
+    ports:
+      - "4000:4000"  # API port
+    depends_on:
+      - postgres
+      - bch-node
+    volumes:
+      - ./miningcore/config.json:/app/config.json
+      - ./miningcore/coins.json:/app/coins.json
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4000
+    networks:
+      - miningcore-net
+
+  webui:
+    image: nginx:alpine
+    container_name: miningcore-webui
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./webui:/usr/share/nginx/html
+    networks:
+      - miningcore-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/config:/etc/nginx/conf.d
+    depends_on:
+      - webui
+      - miningcore
+    networks:
+      - miningcore-net
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOZZLE_FILTER=name=miningcore|webui|bch-node|postgres|nginx|dozzle|watchtower
+    ports:
+      - "8080:8080"
+    networks:
+      - miningcore-net
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 3600 --cleanup
+    networks:
+      - miningcore-net
+
+networks:
+  miningcore-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
