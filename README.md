@@ -24,6 +24,7 @@ git pull
 MiningCore: https://github.com/TheRetroMike/rmt-miningcore.git
 
 Miningcore.WebUI: https://github.com/btclinux/Miningcore.WebUI.git (Docker image not available, created mannualy in yml)
+(UPDATE: here is Docker image:https://github.com/warlocksingh/Miningcore.WebUI.git)
 
 dozzle image: amir20/dozzle
 
